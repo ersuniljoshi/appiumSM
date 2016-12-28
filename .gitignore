@@ -4,7 +4,6 @@
 .project
 .pydevproject
 .settings/
-
 *.egg
 *.egg-info
 *.eggs
@@ -12,3 +11,4 @@
 *.swp
 *.swo
 *.pyo
+__*__

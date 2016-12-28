@@ -6,10 +6,11 @@ from library.setlog import Logger
 loggerObj = Logger()
 logger = loggerObj.setLogger("logs")
 
+
 # Testcase 1 : This testcase will sign-in and create survey with 4 questions
-def test_createSurveyWithFiveQuestions(setUp,codexFile):
+def test_createSurveyWithFiveQuestions(setUp, codexFile):
     driver = setUp
-    QB = QuestionBuilder(driver,codexFile)
+    QB = QuestionBuilder(driver, codexFile)
     logger.info("Executing Testcase 1...........")
     logger.info("Signing in..........")
 

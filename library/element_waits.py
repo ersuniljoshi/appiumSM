@@ -1,6 +1,4 @@
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions
-from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
 from element_codexes import ElementCodex
 
@@ -25,5 +23,3 @@ class Waits():
             print "Unable to locate element"
             return False
         return True
-
-

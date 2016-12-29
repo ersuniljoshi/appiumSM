@@ -2,6 +2,7 @@
 from library.question_types import QuestionBuilder
 # Importing setlog file for logging purpose
 from library.setlog import Logger
+
 loggerObj = Logger()
 logger = loggerObj.setLogger("logs")
 
@@ -28,7 +29,7 @@ def test_createSurveyWithFiveQuestions(setUp, codexFile):
 
     # Question 1 : Text type
     rv = QB.addTextTypeOfQuestion("A survey about Infobeans")
-    if rv is False:
+    if not rv:
         logger.info("Failed to add text type of question")
         QB.tearDown()
         assert rv
@@ -37,7 +38,7 @@ def test_createSurveyWithFiveQuestions(setUp, codexFile):
 
     # Question 2 : Comment box
     rv = QB.addCommentBoxTypeOfQuestion("Tell us about infobeans")
-    if rv is False:
+    if not rv:
         logger.info("Failed to add comment box type of question")
         QB.tearDown()
         assert rv
@@ -46,7 +47,7 @@ def test_createSurveyWithFiveQuestions(setUp, codexFile):
 
     # Question 3 : drop down
     rv = QB.addDropDownQuestionTypeOfQuestion("Are you a tester?")
-    if rv is False:
+    if not rv:
         logger.info("Failed to add drop down type of question")
         QB.tearDown()
         assert rv
@@ -55,7 +56,7 @@ def test_createSurveyWithFiveQuestions(setUp, codexFile):
 
     # Question 4 : Matrix / Rating
     rv = QB.addMatrixRatingTypeOfQuestion("Best feature of SM")
-    if rv is False:
+    if not rv:
         logger.info("Failed to add matrix rating type of question")
         QB.tearDown()
         assert rv
@@ -66,7 +67,7 @@ def test_createSurveyWithFiveQuestions(setUp, codexFile):
     # Verify survey in preview
     logger.info("Verifying survey is created......")
     rv = QB.previewAndTestSurvey()
-    if rv is False:
+    if not rv:
         logger.info("Unable preview and test survey")
         QB.tearDown()
         assert rv
@@ -77,11 +78,11 @@ def test_createSurveyWithFiveQuestions(setUp, codexFile):
 
 
 # Testcase 2 : This test will be failed forcefully
-def test_forcefullyFailedTestcase(setUp,codexFile):
+def test_defaultSurveynameTestcase(setUp,codexFile):
     driver = setUp
     QB = QuestionBuilder(driver,codexFile)
     logger.info("Executing Testcase 2.............")
-    rv = QB.createSurvey("survey 2")
+    rv = QB.createSurvey()
     if rv == False:
         logger.info("Testcase 2 failed")
         QB.tearDown()
@@ -90,9 +91,6 @@ def test_forcefullyFailedTestcase(setUp,codexFile):
         logger.info("Survey created")
         screen_shot(driver)
         QB.tearDown()
-
-    # Forcefully failed
-    #assert False
 
 
 # Testcase 3 : This test will create a empty survey
@@ -125,7 +123,7 @@ def test_userSignOut(setUp, codexFile):
     logger.info("Signing out..........")
     rv = QB.signOutUserLogin()
 
-    if rv is False:
+    if not rv:
         logger.info("Testcase 4 failed")
         assert rv
     else:

@@ -7,7 +7,6 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
 
 class ElementCodex:
-
     def __init__(self,codexFile):
         self.whitespace_pattern = re.compile('^\s+$')
         self.newline_only_pattern = re.compile('\n')
@@ -30,7 +29,7 @@ class ElementCodex:
             return False
 
     def read_codex(self, input_file):
-        codex_file_path = os.getcwd()[:-7] + input_file
+        codex_file_path = os.getcwd() + "/resources/" + input_file
         codex_filestream = open(codex_file_path, 'r')
         for line in codex_filestream:
             # if the line is empty, skip
@@ -40,7 +39,6 @@ class ElementCodex:
             if self.line_is_comment(line):
                 continue
             self.add_codex_entry(line)
-
 
     def add_codex_entry(self, line):
         split_on_dq = string.split(line, '"')
@@ -90,7 +88,6 @@ class ElementCodex:
         else:
             return False
 
-
     def isElementLocated(self,codex_details):
         '''
         :param codex_details: contains attribute type and attribute id
@@ -107,4 +104,3 @@ class ElementCodex:
             (By.XPATH, codex_details[1]))
         else:
             return False
-

@@ -1,6 +1,5 @@
 from element_waits import Waits
 from element_codexes import ElementCodex
-import time
 
 class QuestionBuilder():
     def __init__(self,driver,codexFile):
@@ -8,29 +7,24 @@ class QuestionBuilder():
         self.WO = Waits(self.driver,codexFile+"_codexes.txt")
         self.ECO = ElementCodex(codexFile+"_codexes.txt")
 
-
-    def createSurvey(self,question_title):
+    def createSurvey(self,question_title="Default_survey"):
         '''
         It will create survey with given title
         :param question_title:  survey title
         :return: returns True if survey created successfully
         '''
         rv = self.waitForElement("createSurvey")
-        if rv is False:
+        if not rv:
             return rv
         ele = self.getWebElement("createSurvey")
-        if ele is not False:
-            ele.click()
-        else:
-            return ele
+        if not self.click_element(ele):
+            return False
         rv = self.waitForElement("createNewSurvey")
-        if rv is False:
+        if not rv:
             return rv
         ele = self.getWebElement("createNewSurvey")
-        if ele is not False:
-            ele.click()
-        else:
-            return ele
+        if not self.click_element(ele):
+            return False
         ele = self.getWebElement("createSurveyTitle")
         if ele is not False:
             ele.clear()
@@ -38,10 +32,14 @@ class QuestionBuilder():
         else:
             return ele
         ele = self.getWebElement("createSurveyAfterTitleEntered")
-        if ele is not False:
+        return ele.click() if ele else ele
+
+    def click_element(self, ele):
+        if ele:
             ele.click()
+            return True
         else:
-            return ele
+            return False
 
     def tearDown(self):
         '''
@@ -83,11 +81,7 @@ class QuestionBuilder():
         '''
         codex_details = self.ECO.get_codex(codex)
         ele = self.ECO.getElement(self.driver, codex_details)
-        if ele != None:
-            return ele
-        else:
-            return False
-
+        return ele
 
     def signOutUserLogin(self):
         '''
@@ -95,35 +89,29 @@ class QuestionBuilder():
         :return: True if successfully signout O.W False
         '''
         ele = self.getWebElement("navigateUpTripleLineButton")
-        if ele is not False:
-            ele.click()
-        else:
-            return ele
+        if not self.click_element(ele):
+            return False
         rv = self.waitForElement("wheelButtonForSignOut")
-        if rv is False:
+        if not rv:
             return rv
         ele = self.getWebElement("wheelButtonForSignOut")
-        if ele is not False:
-            ele.click()
-        else:
-            return ele
+        if not self.click_element(ele):
+            return False
         rv = self.waitForElement("signOutButton")
-        if rv is False:
+        if not rv:
             return rv
         ele = self.getWebElement("signOutButton")
-        if ele is not False:
-            ele.click()
-        else:
-            return ele
+        if not self.click_element(ele):
+            return False
         return True
 
     def userSignIn(self):
         '''
         user sign in
-        :return: returns true if successfully signin O.W False
+        :return: returns true if successfully sign in O.W False
         '''
         rv = self.waitForElement("signInButton")
-        if rv is False:
+        if not rv:
             return rv
         ele = self.getWebElement("signInButton")
         ele.click()
@@ -134,136 +122,54 @@ class QuestionBuilder():
         ele.clear()
         ele.send_keys("InfoBeans!@#")
         ele = self.getWebElement("signInWithCredentials")
-        ele.click()
-        return True
-
-    def verifyQuestionContainerIsOpen(self):
-        rv = self.waitForElement("selectTextQuestionType")
-        if rv:
-            return True
+        if ele:
+            return self.click_element(ele)
         else:
             return False
 
+    def verifyQuestionContainerIsOpen(self):
+        rv = self.waitForElement("selectTextQuestionType")
+        return rv
+
     def openQuestionContainer(self,):
         rv = self.waitForQuestionContainer()
-        if rv is False:
+        if not rv:
             return rv
         ele = self.getWebElement("questionTypesContainer(+)")
         ele.click()
         rv = self.verifyQuestionContainerIsOpen()
-        if rv:
-            return True
-        else:
-            return False
+        return rv
 
     def addTextTypeOfQuestion(self,question_title):
         rv = self.openQuestionContainer()
-        if rv is False:
+        if not rv:
             return rv
         ele = self.getWebElement("selectTextQuestionType")
         ele.click()
         ele = self.getWebElement("textQuestionTypeTitle")
         ele.send_keys(question_title)
         rv = self.saveAnyTypeOfQuestion()
-        if rv is False:
-            return rv
-        return True
-
-    def web_addNextQuestionClick(self):
-        rv = self.waitForElement("addNextQuestionButton")
-        if rv is False:
-            return rv
-        ele = self.getWebElement("addNextQuestionButton")
-        if ele is False:
-            return False
-        ele.click()
-
-    def web_getDropdownMenuForQues(self):
-        rv = self.waitForElement("changeQuesTypeDropdownButton")
-        if rv is False:
-            return rv
-        ele = self.getWebElement("changeQuesTypeDropdownButton")
-        if ele is False:
-            return False
-        ele.click()
-
-    def web_addSingleTextTypeOfQueUsingAddNextQueButton(self, question_title):
-        rv = self.web_addNextQuestionClick()
-        if rv is False:
-            return rv
-        rv = self.web_getDropdownMenuForQues()
-        if rv is False:
-            return rv
-        ele = self.getWebElement("selectSingleTextQueUsingDropdown")
-        ele.click()
-        ele = self.getWebElement("enterQuesTitle")
-        ele.send_keys(question_title)
-        rv = self.saveAnyTypeOfQuestion()
-        if rv is False:
-            return rv
-        return True
-
-    def web_addMultipleChoiceTypeOfQueUsingAddNextQueButton(self, question_title):
-        time.sleep(3)
-        rv = self.web_addNextQuestionClick()
-        if rv is False:
-            return rv
-        rv = self.waitForElement("enterQuesTitle")
-        if rv is False:
-            return rv
-        ele = self.getWebElement("enterQuesTitle")
-        ele.send_keys(question_title)
-        ele = self.getWebElement("multipleChoiceQueRow1")
-        ele.send_keys("Regularly")
-        ele = self.getWebElement("multipleChoiceQueRow2")
-        ele.send_keys("Sometimes")
-        ele = self.getWebElement("multipleChoiceQueRow3")
-        ele.send_keys("Never Tried")
-        rv = self.saveAnyTypeOfQuestion()
-        if rv is False:
-            return rv
-        return True
-
-    def web_addDropDownTypeOfQueUsingAddNextQueButton(self, question_title):
-        time.sleep(3)
-        rv = self.web_addNextQuestionClick()
-        if rv is False:
-            return rv
-        rv = self.waitForElement("enterQuesTitle")
-        if rv is False:
-            return rv
-        ele = self.getWebElement("enterQuesTitle")
-        ele.send_keys(question_title)
-        ele = self.getWebElement("dropDownQueTypeRow1")
-        ele.send_keys("Yes")
-        ele = self.getWebElement("dropDownQueTypeRow2")
-        ele.send_keys("No")
-        rv = self.saveAnyTypeOfQuestion()
-        if rv is False:
-            return rv
-        return True
+        return True if rv else False
 
     def addCommentBoxTypeOfQuestion(self,question_title):
         rv = self.openQuestionContainer()
-        if rv is False:
+        if not rv:
             return rv
         ele = self.getWebElement("selectCommentBoxQuestionType")
         ele.click()
         ele = self.getWebElement("commentBoxQuestionTypeTitle")
         ele.send_keys(question_title)
         rv = self.saveAnyTypeOfQuestion()
-        if rv is False:
-            return rv
-        return True
+        return True if rv else False
 
     def addDropDownQuestionTypeOfQuestion(self,question_title):
         rv = self.openQuestionContainer()
-        if rv is False:
+        if not rv:
             return rv
         ele = self.getWebElement("selectDropDownQuestionType")
         ele.click()
         rv = self.waitForElement("dropDownQuestionTypeTitle")
-        if rv is False:
+        if not rv:
             return rv
         ele = self.getWebElement("dropDownQuestionTypeTitle")
         ele.send_keys(question_title)
@@ -272,74 +178,59 @@ class QuestionBuilder():
         ele.send_keys("Yes")
         self.hideKeyboard()
         rv = self.waitForElement("dropDownAnswerChoices2")
-        if rv is False:
+        if not rv:
             return rv
         ele = self.getWebElement("dropDownAnswerChoices2")
         ele.send_keys("No")
         self.hideKeyboard()
         rv = self.saveAnyTypeOfQuestion()
-        if rv is False:
-            return rv
-        return True
+        return True if rv else False
 
     def addMatrixRatingTypeOfQuestion(self,question_title):
         rv = self.openQuestionContainer()
-        if rv is False:
+        if not rv:
             return rv
         ele = self.getWebElement("selectMatrixRatingQuestionType")
         ele.click()
         rv = self.waitForElement("matrixRatingQuestionTypeTitle")
-        if rv is False:
+        if not rv:
             return rv
         ele = self.getWebElement("matrixRatingQuestionTypeTitle")
         ele.send_keys(question_title)
         ele = self.getWebElement("matrixRatingQuestionTypeRows")
         ele.click()
         rv = self.waitForElement("enterMatrixRatingRowLable1")
-        if rv is False:
+        if not rv:
             return rv
         ele = self.getWebElement("enterMatrixRatingRowLable1")
         ele.clear()
         ele.send_keys("Interface")
         rv = self.waitForElement("enterMatrixRatingRowLabel2")
-        if rv is False:
+        if not rv:
             return rv
         ele = self.getWebElement("enterMatrixRatingRowLabel2")
         ele.clear()
         ele.send_keys("Survey design")
         rv = self.saveAnyTypeOfQuestion()
-        if rv is False:
+        if not rv:
             return rv
         rv = self.saveAnyTypeOfQuestion()
-        if rv is False:
-            return rv
-        return True
-
+        return True if rv else False
 
     def hideKeyboard(self):
         self.driver.hide_keyboard()
 
-
     def saveAnyTypeOfQuestion(self):
         ele = self.getWebElement("saveQuestion")
-        if ele is None:
+        if not ele:
             return False
         else:
             ele.click()
             return True
-
-    def web_saveAnyTypeOfQuestion(self):
-        ele = self.getWebElement("saveQuestion")
-        if ele is None:
-            return False
-        else:
-            ele.click()
-            return True
-
 
     def previewAndTestSurvey(self):
         rv = self.waitForElement("tripleDotButtonForPreviewAndTest")
-        if rv is False:
+        if not rv:
             return rv
         ele = self.getWebElement("tripleDotButtonForPreviewAndTest")
         ele.click()

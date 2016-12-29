@@ -12,3 +12,7 @@
 *.swo
 *.pyo
 __*__
+*.png
+*.log
+*.css
+Results/

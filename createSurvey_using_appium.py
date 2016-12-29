@@ -1,6 +1,5 @@
 # Import question builder class
 from library.question_types import QuestionBuilder
-import pytest
 # Importing setlog file for logging purpose
 from library.setlog import Logger
 loggerObj = Logger()
@@ -77,7 +76,6 @@ def test_createSurveyWithFiveQuestions(setUp, codexFile):
         QB.tearDown()
 
 
-@pytest.mark.only
 # Testcase 2 : This test will be failed forcefully
 def test_forcefullyFailedTestcase(setUp,codexFile):
     driver = setUp
@@ -97,7 +95,6 @@ def test_forcefullyFailedTestcase(setUp,codexFile):
     #assert False
 
 
-@pytest.mark.only
 # Testcase 3 : This test will create a empty survey
 def test_createBlankSurvey(setUp, codexFile):
     driver = setUp

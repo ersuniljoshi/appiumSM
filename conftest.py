@@ -1,6 +1,5 @@
 # Using appium webdriver to automate
 from appium import webdriver
-import selenium
 import pytest
 import os
 
@@ -8,10 +7,7 @@ def pytest_addoption(parser):
     parser.addoption("--device", action="store", default="Android Emulator",
         help="my option: Android Emulator or Android device")
     parser.addoption("--codexFile", action="store", default="android",
-        help="my option: ios or android or web")
-    parser.addoption("--browser", action="store", default="ff",
-        help="my option: ff or chrome")
-
+        help="my option: android")
 
 @pytest.fixture
 def device(request):
@@ -20,10 +16,6 @@ def device(request):
 @pytest.fixture
 def codexFile(request):
     return request.config.getoption("--codexFile")
-
-@pytest.fixture
-def browser(request):
-    return request.config.getoption("--browser")
 
 
 @pytest.fixture(scope="function")
@@ -37,23 +29,6 @@ def setUp(device):
     driver = webdriver.Remote('http://localhost:4444/wd/hub', desired_caps)
     return driver
 
-# @pytest.fixture(scope="function")
-# def setUpWeb(browser):
-#     if browser == 'ff':
-#         driver = selenium.webdriver.Firefox()
-#     else:
-#         driver = selenium.webdriver.Chrome("/home/vishal/Downloads/chromedriver")
-#     return driver
-
-@pytest.fixture(scope="function")
-def setUpWeb(browser):
-    desired_caps = {}
-    desired_caps['platformName'] = 'Linux'
-    desired_caps['platformVersion'] = '51.0.2704.106'
-    desired_caps['browserName'] = browser
-    driver = webdriver.Remote('http://localhost:4444/wd/hub', desired_caps)
-    #request.addfinalizer(driver.quit())
-    return driver
 
 @pytest.mark.hookwrapper
 def pytest_runtest_makereport(item, call):
@@ -70,4 +45,3 @@ def pytest_runtest_makereport(item, call):
                         os.remove("myfile1")
                         extra.append(pytest_html.extras.image(screenshot, 'Screenshot'))
         report.extra = extra
-

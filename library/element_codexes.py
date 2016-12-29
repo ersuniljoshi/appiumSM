@@ -30,7 +30,7 @@ class ElementCodex:
             return False
 
     def read_codex(self, input_file):
-        codex_file_path = os.path.abspath(os.path.join("/home/vishal/forAppiumDemo/demo/newAndroidWebDemo/resources/",input_file))
+        codex_file_path = os.getcwd()[:-7] + input_file
         codex_filestream = open(codex_file_path, 'r')
         for line in codex_filestream:
             # if the line is empty, skip
@@ -45,7 +45,7 @@ class ElementCodex:
     def add_codex_entry(self, line):
         split_on_dq = string.split(line, '"')
         result_count = len(split_on_dq)
-        # we expect 3 fields: 1 is everything befoerhte start of the idstring,
+        # we expect 3 fields: 1 is everything before start of the idstring,
         # one is the idstring itself, one is everything after the idstring
         if result_count < 3:
             print("Looking for idstring(s). We did not get the " +

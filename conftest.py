@@ -1,4 +1,4 @@
-# Using appium webdriver to automate
+# Using Appium webdriver to automate
 from appium import webdriver
 import pytest
 import os

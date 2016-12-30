@@ -2,13 +2,14 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 from element_codexes import ElementCodex
 
+
 class Waits():
-    def __init__(self, driver,codexFile):
+    def __init__(self, driver, codexFile):
         self.driver = driver
         self.time_interval = 50
         self.ECO = ElementCodex(codexFile)
 
-    def waitUntilElementLocated(self,driver,codex):
+    def waitUntilElementLocated(self, driver, codex):
         '''
         It will wait until element is not located till tiem interval
         :param driver: webdriver

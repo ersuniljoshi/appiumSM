@@ -3,15 +3,17 @@ from appium import webdriver
 import pytest
 import os
 
+
 def pytest_addoption(parser):
     parser.addoption("--device", action="store", default="Android Emulator",
-        help="my option: Android Emulator or Android device")
-    parser.addoption("--codexFile", action="store", default="android",
-        help="my option: android")
+                     help="my option: Android Emulator or Android device")
+    parser.addoption("--codexFile", action="store", default="android", help="my option: android")
+
 
 @pytest.fixture
 def device(request):
     return request.config.getoption("--device")
+
 
 @pytest.fixture
 def codexFile(request):

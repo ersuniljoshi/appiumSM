@@ -1,13 +1,12 @@
 import re
 import string
 import os
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import TimeoutException
+
 
 class ElementCodex:
-    def __init__(self,codexFile):
+    def __init__(self, codexFile):
         self.whitespace_pattern = re.compile('^\s+$')
         self.newline_only_pattern = re.compile('\n')
         self.comment_pattern = re.compile('^\#.*')
@@ -65,13 +64,13 @@ class ElementCodex:
             else:
                 name = pre_string_fields[0]
                 ident = pre_string_fields[1]
-                self.elements_dictionary[name] = [ident,idstringlist[0]]
+                self.elements_dictionary[name] = [ident, idstringlist[0]]
 
     def get_codex(self, codex_name):
         result_codex = self.elements_dictionary[codex_name]
         return result_codex
 
-    def getElement(self,driver,codex_details):
+    def getElement(self, driver, codex_details):
         '''
         :param driver: appium webdriver
         :param codex_details: contains attribute type and attribute id
@@ -88,19 +87,16 @@ class ElementCodex:
         else:
             return False
 
-    def isElementLocated(self,codex_details):
+    def isElementLocated(self, codex_details):
         '''
         :param codex_details: contains attribute type and attribute id
         :return: element if element located otherwise False
         '''
         if codex_details[0] == "id":
-            return expected_conditions.presence_of_element_located(
-            (By.ID, codex_details[1]))
+            return expected_conditions.presence_of_element_located((By.ID, codex_details[1]))
         elif codex_details[0] == "class":
-            return expected_conditions.presence_of_element_located(
-            (By.CLASS_NAME, codex_details[1]))
+            return expected_conditions.presence_of_element_located((By.CLASS_NAME, codex_details[1]))
         elif codex_details[0] == "xpath":
-            return expected_conditions.presence_of_element_located(
-            (By.XPATH, codex_details[1]))
+            return expected_conditions.presence_of_element_located((By.XPATH, codex_details[1]))
         else:
             return False

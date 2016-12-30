@@ -1,13 +1,14 @@
 from element_waits import Waits
 from element_codexes import ElementCodex
 
+
 class QuestionBuilder():
-    def __init__(self,driver,codexFile):
+    def __init__(self, driver, codexFile):
         self.driver = driver
-        self.WO = Waits(self.driver,codexFile+"_codexes.txt")
+        self.WO = Waits(self.driver, codexFile+"_codexes.txt")
         self.ECO = ElementCodex(codexFile+"_codexes.txt")
 
-    def createSurvey(self,question_title="Default_survey"):
+    def createSurvey(self, question_title="Default_survey"):
         '''
         It will create survey with given title
         :param question_title:  survey title
@@ -48,7 +49,7 @@ class QuestionBuilder():
         '''
         self.driver.quit()
 
-    def waitForElement(self,codex):
+    def waitForElement(self, codex):
         '''
         Wait for element appearance
         :param codex: codex for eleement
@@ -73,7 +74,7 @@ class QuestionBuilder():
         rv = self.waitForElement("questionTypesContainer(+)")
         return rv
 
-    def getWebElement(self,codex):
+    def getWebElement(self, codex):
         '''
         Used to return web element object
         :param codex: codex for web element
@@ -140,7 +141,7 @@ class QuestionBuilder():
         rv = self.verifyQuestionContainerIsOpen()
         return rv
 
-    def addTextTypeOfQuestion(self,question_title):
+    def addTextTypeOfQuestion(self, question_title):
         rv = self.openQuestionContainer()
         if not rv:
             return rv
@@ -151,7 +152,7 @@ class QuestionBuilder():
         rv = self.saveAnyTypeOfQuestion()
         return True if rv else False
 
-    def addCommentBoxTypeOfQuestion(self,question_title):
+    def addCommentBoxTypeOfQuestion(self, question_title):
         rv = self.openQuestionContainer()
         if not rv:
             return rv
@@ -162,7 +163,7 @@ class QuestionBuilder():
         rv = self.saveAnyTypeOfQuestion()
         return True if rv else False
 
-    def addDropDownQuestionTypeOfQuestion(self,question_title):
+    def addDropDownQuestionTypeOfQuestion(self, question_title):
         rv = self.openQuestionContainer()
         if not rv:
             return rv
@@ -186,7 +187,7 @@ class QuestionBuilder():
         rv = self.saveAnyTypeOfQuestion()
         return True if rv else False
 
-    def addMatrixRatingTypeOfQuestion(self,question_title):
+    def addMatrixRatingTypeOfQuestion(self, question_title):
         rv = self.openQuestionContainer()
         if not rv:
             return rv
@@ -237,11 +238,3 @@ class QuestionBuilder():
         ele = self.getWebElement("selectPreviewAndTestButton")
         ele.click()
         return True
-
-
-
-
-
-
-
-

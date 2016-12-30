@@ -24,7 +24,7 @@ def codexFile(request):
 def setUp(device):
     desired_caps = {}
     desired_caps['platformName'] = 'Android'
-    desired_caps['platformVersion'] = '5.1.1'
+    desired_caps['platformVersion'] = '4.4.4'
     desired_caps['deviceName'] = device
     desired_caps['appPackage'] = 'com.surveymonkey'
     desired_caps['appActivity'] = 'com.surveymonkey.login.activities.LandingActivity'

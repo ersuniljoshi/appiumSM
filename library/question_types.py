@@ -33,7 +33,11 @@ class QuestionBuilder():
         else:
             return ele
         ele = self.getWebElement("createSurveyAfterTitleEntered")
-        return ele.click() if ele else ele
+        if ele:
+            self.click_element(ele)
+            return True
+        else:
+            return False
 
     def click_element(self, ele):
         if ele:

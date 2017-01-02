@@ -24,4 +24,4 @@
     
 ## Commmand to run script :
 
-   py.test -v -s -m "marker" --html=<path> --junitxml=<path>
+   py.test -v -s -m "marker" --html=Path-for-report-file --junitxml=Path-for-report-file

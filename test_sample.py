@@ -9,6 +9,3 @@ def test_2():
 @pytest.mark.ff
 def test_3():
     assert False
-
-def test_4():
-    assert True

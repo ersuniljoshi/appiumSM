@@ -20,7 +20,7 @@ def device(request):
 
 @pytest.fixture
 def codexFile(request):
-    return request.config.getoption("--codexFile").lower()
+    return request.config.getoption("--codexFile")
 
 @pytest.fixture
 def platformName(request):

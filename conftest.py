@@ -5,7 +5,7 @@ import os
 
 
 def pytest_addoption(parser):
-    parser.addoption("--device", action="store", default="Android Emulator",
+    parser.addoption("--device", action="store", default="Android Device",
                      help="my option: Android Emulator or Android device")
     parser.addoption("--codexFile", action="store", default="android", help="my option: android")
     parser.addoption("--platformName", action="store", default="Android", help="name: Android")

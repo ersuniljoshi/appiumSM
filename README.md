@@ -22,7 +22,7 @@
               
     options : "Android Emulator", "Android device"
     
-    default : "Android Emulator"
+    default : "Android Device"
         
 * --codexFile
 
@@ -42,7 +42,7 @@
     
 ## Commmand to run script :
 
-   py.test --device="Android device" --codexFile=android test-path 
-           --html=path-for-report-file --junitxml=junit.xml
+   py.test -v -s testfile --device='ANDROID DEVICE' --hub_url='hub_url/wd/hub'
+            --codexFile=android test-path  --platformName='name' --platformVersion='version' --html=path-for-report-file --junitxml=junit.xml
            
    

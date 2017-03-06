@@ -10,6 +10,7 @@ def pytest_addoption(parser):
     parser.addoption("--codexFile", action="store", default="android", help="my option: android")
     parser.addoption("--platformName", action="store", default="Android", help="name: Android")
     parser.addoption("--platformVersion", action="store", default="5.1.1", help="version: 5.1.1")
+    parser.addoption("--hub_url", action="store", default="http://localhost:4444/wd/hub", help="url: http://localhost:4444/wd/hub")
 
 
 @pytest.fixture
@@ -29,19 +30,22 @@ def platformName(request):
 def platformVersion(request):
     return request.config.getoption("--platformVersion").lower()
 
+@pytest.fixture
+def hub_url(request):
+    return request.config.getoption("--hub_url").lower()
+
 
 
 
 @pytest.fixture(scope="function")
-def setUp(device, platformName, platformVersion):
+def setUp(device, platformName, platformVersion,hub_url):
     desired_caps = {}
     desired_caps['platformName'] = platformName
     desired_caps['platformVersion'] = platformVersion
     desired_caps['deviceName'] = device
     desired_caps['appPackage'] = 'com.surveymonkey'
     desired_caps['appActivity'] = 'com.surveymonkey.login.activities.LandingActivity'
-    driver = webdriver.Remote('http://localhost:4444/wd/hub', desired_caps)
-    #driver = webdriver.Remote('http://172.16.20.10:4723/wd/hub', desired_caps)
+    driver = webdriver.Remote(hub_url, desired_caps)
     return driver
 
 

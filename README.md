@@ -31,6 +31,31 @@
     options : "android", ios
     
     default : "android"
+
+* --hub_url
+
+    usage   : Run script on the remote url of the selenium hub
+
+    options : "http://localhost:4444/wd/hub"
+
+    default : "http://localhost:4444/wd/hub"
+
+* --platformName
+
+    usage   : Run script on the specified platform name
+
+    options : "Android or iOS
+
+    default : "Android"
+
+* --platformVersion
+
+    usage   : Run script on the specified platform version
+
+    options : "5.1.1"
+
+    default : "5.1.1"
+
     
 ## Pytest built-in Command Line Parameters/Options for project :
 
